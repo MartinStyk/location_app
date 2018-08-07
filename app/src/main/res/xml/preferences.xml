@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/action_settings">
+
+    <PreferenceCategory android:title="@string/setting_display_map">
+
+        <ListPreference
+            android:entries="@array/colors"
+            android:entryValues="@array/color_values"
+            android:key="preference_line_color"
+            android:title="@string/setting_line_color" />
+
+        <ListPreference
+            android:entries="@array/widths"
+            android:entryValues="@array/widths_values"
+            android:key="preference_line_width"
+            android:title="@string/setting_line_width" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_location">
+        <ListPreference
+            android:entries="@array/update_interval"
+            android:entryValues="@array/update_interval_values"
+            android:key="preference_update_interval"
+            android:title="@string/settings_location_interval" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

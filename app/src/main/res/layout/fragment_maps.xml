@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="sk.styk.martin.location.ui.map.MapViewModel" />
+    </data>
+
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/location_updates_status_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:isTrackingActive="@{viewmodel.trackingStatus}" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/map_view_type_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/grey_100"
+            android:layout_gravity="top|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:viewType="@{viewmodel.viewTypeData}" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</layout>

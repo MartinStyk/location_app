@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colors">
+        <item>@string/settings_color_black</item>
+        <item>@string/settings_color_red</item>
+    </string-array>
+    <string-array  name="color_values">
+        <item>FF000000</item>
+        <item>FFFF0000</item>
+    </string-array>
+
+    <string-array name="widths">
+        <item>@string/settings_width_thin</item>
+        <item>@string/settings_width_medium</item>
+        <item>@string/settings_width_thick</item>
+    </string-array>
+    <string-array  name="widths_values">
+        <item>5</item>
+        <item>15</item>
+        <item>50</item>
+    </string-array>
+
+    <string-array name="update_interval">
+        <item>@string/settings_location_interval_5</item>
+        <item>@string/settings_location_interval_10</item>
+        <item>@string/settings_location_interval_15</item>
+        <item>@string/settings_location_interval_30</item>
+        <item>@string/settings_location_interval_60</item>
+    </string-array>
+    <string-array  name="update_interval_values">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+
+</resources>

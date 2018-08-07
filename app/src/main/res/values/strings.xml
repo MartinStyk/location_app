@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Location</string>
+    <string name="title_activity_maps">Location</string>
+    <string name="location_updated">Location Updated: %1$s</string>
+    <string name="location_unknown">Location unknown</string>
+
+
+    <string name="location_permission_denied">Location permission denied</string>
+
+    <string name="location_tracking_active">Tracking location</string>
+    <string name="location_tracking_not_active">Not tracking location</string>
+
+    <string name="action_map">Map</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_delete_data">Delete location history</string>
+
+    <!-- Strings related to Location detail sheet -->
+    <string name="detail_sheet_title">Location detail</string>
+    <string name="detail_sheet_latitude">Latitude</string>
+    <string name="detail_sheet_longitude">Longitude</string>
+    <string name="detail_sheet_altitude">Altitude</string>
+    <string name="detail_sheet_speed">Speed</string>
+    <string name="detail_sheet_time">Time</string>
+    <string name="detail_sheet_provider">Location provider</string>
+    <string name="detail_sheet_meter_unit">m</string>
+
+
+    <!-- Strings related to Settings -->
+    <string name="title_activity_settings">Settings</string>
+    <string name="setting_display_map">Map style</string>
+    <string name="setting_line_color">Line color</string>
+    <string name="setting_line_width">Line width</string>
+    <string name="settings_location">Location</string>
+    <string name="settings_location_interval">Update interval</string>
+
+    <string name="settings_color_black">Black</string>
+    <string name="settings_color_black_value">FF000000</string>
+    <string name="settings_color_red">Red</string>
+    <string name="settings_color_red_value">FFFF0000</string>
+    <string name="settings_width_thin">Thin</string>
+    <string name="settings_width_medium">Medium</string>
+    <string name="settings_width_thick">Thick</string>
+
+    <string name="settings_location_interval_5">5 seconds</string>
+    <string name="settings_location_interval_10">10 seconds</string>
+    <string name="settings_location_interval_15">15 seconds</string>
+    <string name="settings_location_interval_30">30 seconds</string>
+    <string name="settings_location_interval_60">60 seconds</string>
+
+
+    <!-- Notification -->
+    <string name="notification_open_app">Open app</string>
+    <string name="notification_stop_tracking">Stop tracking</string>
+
+    <!-- Navigation drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">@string/app_name</string>
+    <string name="nav_header_subtitle">martin.styk@gmail.com</string>
+    <string name="nav_header_desc">Navigation</string>
+
+</resources>
