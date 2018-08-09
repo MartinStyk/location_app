@@ -63,7 +63,6 @@ class Preferences @Inject constructor(
 
         const val KEY_FIRST_RUN = "is_first_run"
         const val KEY_REQUESTING_LOCATION_UPDATES = "requesting_locaction_updates"
-        const val KEY_REQUESTING_COMPLETE_VIEW = "requesting_complete_view"
         const val KEY_LOCATION_UPDATES_INTERVAL = "preference_update_interval"
         const val KEY_LINE_COLOR = "preference_line_color"
         const val KEY_LINE_WIDTH = "preference_line_width"

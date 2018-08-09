@@ -19,10 +19,8 @@ open class LocationServiceBindableActivity : AppCompatActivity(), LocationTracki
 
     var boundService: LocationUpdatesService? = null
 
-    // Tracks the bound state of the service.
     private var serviceBound = false
 
-    // Monitors the state of the connection to the service.
     private val serviceConnection = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
@@ -59,7 +57,7 @@ open class LocationServiceBindableActivity : AppCompatActivity(), LocationTracki
     @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
     fun onLocationPermissionDenied() {
         Snackbar.make(findViewById(android.R.id.content), getString(R.string.location_permission_denied),
-                Snackbar.LENGTH_INDEFINITE)
+                Snackbar.LENGTH_SHORT)
                 .show()
     }
 

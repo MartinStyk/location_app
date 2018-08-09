@@ -10,5 +10,4 @@ enum class MapViewType {
         FIT_ALL -> TRACKING
         USER_FREE -> TRACKING
     }
-
 }

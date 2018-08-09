@@ -16,7 +16,6 @@ class MapViewModel @Inject constructor(
         private val locationRepository: LocationDataRepository,
         private val preferences: Preferences) : ViewModel() {
 
-
     var trackingStatus: LiveData<Boolean> = preferences.requestingLocationUpdatesLive()
 
     var lineColor: Int = preferences.lineColor()
@@ -47,7 +46,9 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun deleteLocationData() = locationRepository.deleteAll()
+    fun deleteLocationData() {
+        locationRepository.deleteAll()
+    }
 
     fun getCompleteViewBounds(): LatLngBounds? {
         return locationData.value?.let { list ->

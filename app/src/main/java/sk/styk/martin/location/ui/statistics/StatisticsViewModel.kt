@@ -1,19 +1,17 @@
 package sk.styk.martin.location.ui.statistics
 
 import android.arch.lifecycle.*
-import android.databinding.ObservableBoolean
 import sk.styk.martin.location.db.LocationData
-import sk.styk.martin.location.db.LocationDataDao
-import sk.styk.martin.location.db.LocationDataService
+import sk.styk.martin.location.db.LocationDataRepository
 import javax.inject.Inject
 
 
 class StatisticsViewModel @Inject constructor(
-        private val locationDataService: LocationDataDao) : ViewModel() {
+        private val locationDataRepository: LocationDataRepository) : ViewModel() {
 
 
     val data: LiveData<List<LocationData>> by lazy {
-        locationDataService.getAll()
+        locationDataRepository.getAll()
     }
 
     val fastestSpeed = Transformations.map(data) {

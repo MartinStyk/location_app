@@ -4,6 +4,7 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.graphics.DashPathEffect
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v4.content.ContextCompat
@@ -15,7 +16,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.utils.Utils
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import sk.styk.martin.location.R
@@ -66,26 +66,25 @@ class StatisticsFragment : BottomSheetDialogFragment() {
             formLineDashEffect = DashPathEffect(floatArrayOf(10f, 5f), 0f)
             formSize = 15f
 
-            if (Utils.getSDKInt() >= 18) {
-                // fill drawable only supported on api level 18 and above
-                val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.fade_accent)
-                fillDrawable = drawable
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.fade_accent)
             } else {
                 fillColor = Color.BLACK
             }
         }
 
-        chart_consumption.data = LineData(ArrayList<ILineDataSet>().apply { add(lineData) })
-        chart_consumption.description.isEnabled = false
-        chart_consumption.xAxis.isEnabled = false
-        chart_consumption.axisRight.isEnabled = false
-        chart_consumption.legend.isEnabled = false
-
-        chart_consumption.axisLeft.apply {
-            enableGridDashedLine(10f, 1f, 0f)
-            setDrawZeroLine(false)
-            setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-            setDrawLimitLinesBehindData(true)
+        chart_consumption.apply {
+            data = LineData(ArrayList<ILineDataSet>().apply { add(lineData) })
+            description.isEnabled = false
+            xAxis.isEnabled = false
+            axisRight.isEnabled = false
+            legend.isEnabled = false
+            axisLeft.apply {
+                enableGridDashedLine(10f, 1f, 0f)
+                setDrawZeroLine(false)
+                setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+                setDrawLimitLinesBehindData(true)
+            }
         }
     }
 

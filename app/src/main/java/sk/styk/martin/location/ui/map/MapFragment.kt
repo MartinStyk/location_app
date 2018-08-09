@@ -26,7 +26,6 @@ import sk.styk.martin.location.databinding.FragmentMapsBinding
 import sk.styk.martin.location.ui.locationdetailsheet.LocationDetailBottomSheet
 import javax.inject.Inject
 
-
 class MapFragment : Fragment(), OnMapReadyCallback {
 
     @Inject
@@ -39,7 +38,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +58,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         setupMap(savedInstanceState)
         setupLocationTrackingControl()
     }
-
-
-
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap

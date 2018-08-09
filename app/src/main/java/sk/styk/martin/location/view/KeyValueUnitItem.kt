@@ -47,11 +47,6 @@ class KeyValueUnitItem @JvmOverloads constructor(context: Context, attrs: Attrib
         unitView.text = unit
     }
 
-    fun setName(name: String) {
-        this.name = name
-        nameView.text = name
-    }
-
     fun setValue(value: String?) {
         this.value = value
         valueView.text = value
@@ -60,10 +55,5 @@ class KeyValueUnitItem @JvmOverloads constructor(context: Context, attrs: Attrib
     fun setValue(value: Double?) {
         this.value = DecimalFormat.getInstance().format(value ?: 0)
         valueView.text = this.value
-    }
-
-    fun setUnit(unit: String) {
-        this.unit = unit
-        unitView.text = unit
     }
 }

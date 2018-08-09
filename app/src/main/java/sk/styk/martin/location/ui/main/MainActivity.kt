@@ -22,10 +22,10 @@ import sk.styk.martin.location.ui.statistics.StatisticsFragment
 class MainActivity : LocationServiceBindableActivity(), LocationTrackingController, NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector {
 
     @Inject
-    lateinit var anroidInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var androidInjector: DispatchingAndroidInjector<Fragment>
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return anroidInjector
+        return androidInjector
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,20 +55,20 @@ class MainActivity : LocationServiceBindableActivity(), LocationTrackingControll
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        // Handle navigation view item clicks here.
         val fragment: Fragment = when (item.itemId) {
             R.id.nav_map -> {
                 toolbar.title = getString(R.string.app_name)
                 MapFragment()
             }
-            R.id.nav_settings -> {
-                toolbar.title = getString(R.string.action_settings)
-                SettingsFragment()
-            }
             R.id.nav_statistics -> {
                 toolbar.title = getString(R.string.action_statistics)
                 StatisticsFragment()
             }
+            R.id.nav_settings -> {
+                toolbar.title = getString(R.string.action_settings)
+                SettingsFragment()
+            }
+
             else -> return false
         }
 
