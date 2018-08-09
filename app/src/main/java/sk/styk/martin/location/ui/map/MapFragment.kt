@@ -1,7 +1,6 @@
 package sk.styk.martin.location.ui.map
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -18,13 +17,13 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.android.synthetic.main.fragment_maps.*
 import sk.styk.martin.location.R
-import sk.styk.martin.location.ui.locationdetailsheet.LocationDetailBottomSheet
 import sk.styk.martin.location.ui.main.LocationServiceBindableActivity
 import sk.styk.martin.location.ui.main.LocationTrackingController
 import sk.styk.martin.location.ui.main.startLocationTrackingWithPermissionCheck
 import com.google.android.gms.maps.model.CameraPosition
 import dagger.android.support.AndroidSupportInjection
 import sk.styk.martin.location.databinding.FragmentMapsBinding
+import sk.styk.martin.location.ui.locationdetailsheet.LocationDetailBottomSheet
 import javax.inject.Inject
 
 

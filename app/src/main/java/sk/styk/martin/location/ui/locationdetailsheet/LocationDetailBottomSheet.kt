@@ -1,6 +1,5 @@
 package sk.styk.martin.location.ui.locationdetailsheet
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import dagger.android.support.AndroidSupportInjection
 import sk.styk.martin.location.R
 import sk.styk.martin.location.databinding.LocationInfoBottomSheetBinding
+import sk.styk.martin.location.ui.statistics.StatisticsFragment
 import javax.inject.Inject
 
 class LocationDetailBottomSheet : BottomSheetDialogFragment() {

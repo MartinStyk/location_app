@@ -7,6 +7,7 @@ import sk.styk.martin.location.di.DbModule
 import sk.styk.martin.location.di.scope.ActivityScope
 import sk.styk.martin.location.di.scope.FragmentScope
 import sk.styk.martin.location.ui.locationdetailsheet.LocationDetailBottomSheet
+import sk.styk.martin.location.ui.statistics.StatisticsFragment
 import sk.styk.martin.location.ui.main.MainActivity
 import sk.styk.martin.location.ui.map.MapFragment
 
@@ -24,5 +25,9 @@ abstract class ActivityBuilder {
     @FragmentScope
     @ContributesAndroidInjector
     abstract fun bindLocationDetailBottomSheet(): LocationDetailBottomSheet
+
+    @FragmentScope
+    @ContributesAndroidInjector
+    abstract fun bindStatisticsFragment(): StatisticsFragment
 
 }

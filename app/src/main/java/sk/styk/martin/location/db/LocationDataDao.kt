@@ -20,4 +20,10 @@ interface LocationDataDao {
 
     @Query("SELECT * FROM locationData WHERE id = :id ")
     fun get(id:Long): LiveData<LocationData>
+
+    @Query("SELECT * FROM locationData ORDER BY speed ASC LIMIT 1")
+    fun getSlowestSpeed(): LiveData<LocationData>
+
+    @Query("SELECT * FROM locationData ORDER BY speed DESC LIMIT 1")
+    fun getFastestSpeed(): LiveData<LocationData>
 }

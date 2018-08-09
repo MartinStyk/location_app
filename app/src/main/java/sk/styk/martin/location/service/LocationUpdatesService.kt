@@ -181,9 +181,7 @@ class LocationUpdatesService : Service() {
 
         this.location = location
 
-        Thread {
-            locationDataRepository.insert(LocationData(location))
-        }.start()
+        locationDataRepository.insert(LocationData(location))
 
         if (isRunningInForeground()) {
             notificationManager.notify(NOTIFICATION_ID, notification)
@@ -216,7 +214,7 @@ class LocationUpdatesService : Service() {
         val activityPendingIntent = PendingIntent.getActivity(this, 0,
                 Intent(this, MainActivity::class.java), 0)
 
-        val builder = NotificationCompat.Builder(this)
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
                 .addAction(R.drawable.ic_launcher_background, getString(R.string.notification_open_app), activityPendingIntent)
                 .addAction(R.drawable.ic_launcher_background, getString(R.string.notification_stop_tracking), servicePendingIntent)
                 .setContentText(location?.basicString() ?: getString(R.string.location_unknown))
@@ -226,8 +224,6 @@ class LocationUpdatesService : Service() {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker(location?.basicString() ?: getString(R.string.location_unknown))
                 .setWhen(System.currentTimeMillis())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            builder.setChannelId(CHANNEL_ID)
 
         builder.build()
     }

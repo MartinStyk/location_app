@@ -7,6 +7,8 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.support.v7.preference.PreferenceManager
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 
 @Module
@@ -22,5 +24,9 @@ class AppModule {
     @Singleton
     fun providesPreferenceUtils(application: Application): SharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(application)
+
+    @Provides
+    @Singleton
+    fun provideBackgroundExecutor(): Executor = Executors.newFixedThreadPool(3)
 
 }

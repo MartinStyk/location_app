@@ -47,10 +47,7 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    fun deleteLocationData() {
-        Thread { locationRepository.deleteAll() }
-                .start()
-    }
+    fun deleteLocationData() = locationRepository.deleteAll()
 
     fun getCompleteViewBounds(): LatLngBounds? {
         return locationData.value?.let { list ->

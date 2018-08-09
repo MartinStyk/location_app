@@ -12,6 +12,7 @@
 
     <string name="action_map">Map</string>
     <string name="action_settings">Settings</string>
+    <string name="action_statistics">Statistics</string>
     <string name="action_delete_data">Delete location history</string>
 
     <!-- Strings related to Location detail sheet -->
@@ -23,6 +24,12 @@
     <string name="detail_sheet_time">Time</string>
     <string name="detail_sheet_provider">Location provider</string>
     <string name="detail_sheet_meter_unit">m</string>
+
+    <!-- Strings related to Statistics  -->
+    <string name="statistics_speed">Speed</string>
+    <string name="statistics_average">Average</string>
+    <string name="statistics_max">Max</string>
+    <string name="statistics_min">Min</string>
 
 
     <!-- Strings related to Settings -->
@@ -47,6 +54,9 @@
     <string name="settings_location_interval_30">30 seconds</string>
     <string name="settings_location_interval_60">60 seconds</string>
 
+    <!-- Units -->
+    <string name="unit_distance">m</string>
+    <string name="unit_speed">km/h</string>
 
     <!-- Notification -->
     <string name="notification_open_app">Open app</string>

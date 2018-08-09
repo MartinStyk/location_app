@@ -16,6 +16,7 @@ import sk.styk.martin.location.ui.settings.SettingsFragment
 import javax.inject.Inject
 import dagger.android.AndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import sk.styk.martin.location.ui.statistics.StatisticsFragment
 
 
 class MainActivity : LocationServiceBindableActivity(), LocationTrackingController, NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector {
@@ -63,6 +64,10 @@ class MainActivity : LocationServiceBindableActivity(), LocationTrackingControll
             R.id.nav_settings -> {
                 toolbar.title = getString(R.string.action_settings)
                 SettingsFragment()
+            }
+            R.id.nav_statistics -> {
+                toolbar.title = getString(R.string.action_statistics)
+                StatisticsFragment()
             }
             else -> return false
         }

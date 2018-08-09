@@ -1,4 +1,4 @@
-package sk.styk.martin.location.service
+package sk.styk.martin.location.di
 
 import android.app.NotificationManager
 import android.app.Service
