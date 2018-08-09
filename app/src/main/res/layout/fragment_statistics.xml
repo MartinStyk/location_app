@@ -13,65 +13,69 @@
             type="sk.styk.martin.location.ui.statistics.StatisticsViewModel" />
     </data>
 
-    <android.support.v7.widget.CardView
-        style="@style/BasicCard"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardUseCompatPadding="true">
+        android:layout_height="wrap_content">
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v7.widget.CardView
+            style="@style/BasicCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            app:cardUseCompatPadding="true">
 
-            <TextView
-                android:id="@+id/textView2"
-                style="@style/StatisticsDetailCardHeader"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/statistics_speed"
-                app:layout_constraintBottom_toTopOf="@+id/chart_consumption"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chart_consumption"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:minHeight="250dp"
-                app:layout_constraintBottom_toTopOf="@+id/statisticsDetailItem"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                app:speedData="@{viewmodel.data}"
-                tools:layout_editor_absoluteX="49dp" />
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/StatisticsDetailCardHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_speed"
+                    app:layout_constraintBottom_toTopOf="@+id/chart_consumption"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <sk.styk.martin.location.view.KeyValueUnitItem
-                android:id="@+id/statisticsDetailItem"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_item_height"
-                app:layout_constraintTop_toBottomOf="@+id/chart_consumption"
-                app:name="@string/statistics_max"
-                app:unit="km/h"
-                app:value="@{UnitUtils.speedConvertToString(viewmodel.fastestSpeed)}" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart_consumption"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="250dp"
+                    app:layout_constraintBottom_toTopOf="@+id/statisticsDetailItem"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:speedData="@{viewmodel.data}"
+                    tools:layout_editor_absoluteX="49dp" />
 
-            <sk.styk.martin.location.view.KeyValueUnitItem
-                android:id="@+id/statisticsDetailItem2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_item_height"
-                app:layout_constraintTop_toBottomOf="@+id/statisticsDetailItem"
-                app:name="@string/statistics_min"
-                app:unit="km/h"
-                app:value="@{UnitUtils.speedConvertToString(viewmodel.slowestSpeed)}" />
+                <sk.styk.martin.location.view.KeyValueUnitItem
+                    android:id="@+id/statisticsDetailItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_item_height"
+                    app:layout_constraintTop_toBottomOf="@+id/chart_consumption"
+                    app:name="@string/statistics_max"
+                    app:unit="km/h"
+                    app:value="@{UnitUtils.speedConvertToString(viewmodel.fastestSpeed)}" />
 
-            <sk.styk.martin.location.view.KeyValueUnitItem
-                android:id="@+id/statisticsDetailItem3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_item_height"
-                app:layout_constraintTop_toBottomOf="@+id/statisticsDetailItem2"
-                app:name="@string/statistics_average"
-                app:unit="km/h"
-                app:value="@{UnitUtils.speedConvertToString(viewmodel.averageSpeed)}" />
+                <sk.styk.martin.location.view.KeyValueUnitItem
+                    android:id="@+id/statisticsDetailItem2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_item_height"
+                    app:layout_constraintTop_toBottomOf="@+id/statisticsDetailItem"
+                    app:name="@string/statistics_min"
+                    app:unit="km/h"
+                    app:value="@{UnitUtils.speedConvertToString(viewmodel.slowestSpeed)}" />
 
-        </android.support.constraint.ConstraintLayout>
+                <sk.styk.martin.location.view.KeyValueUnitItem
+                    android:id="@+id/statisticsDetailItem3"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_item_height"
+                    app:layout_constraintTop_toBottomOf="@+id/statisticsDetailItem2"
+                    app:name="@string/statistics_average"
+                    app:unit="km/h"
+                    app:value="@{UnitUtils.speedConvertToString(viewmodel.averageSpeed)}" />
 
+            </android.support.constraint.ConstraintLayout>
 
-    </android.support.v7.widget.CardView>
-
+        </android.support.v7.widget.CardView>
+        
+    </ScrollView>
 </layout>
