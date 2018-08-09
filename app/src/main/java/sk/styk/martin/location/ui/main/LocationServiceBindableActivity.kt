@@ -1,18 +1,20 @@
 package sk.styk.martin.location.ui.main
 
 import android.Manifest
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
+import android.content.*
+import android.os.Bundle
 import android.os.IBinder
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import sk.styk.martin.location.R
-import sk.styk.martin.location.service.LocationUpdatesService
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.RuntimePermissions
+import sk.styk.martin.location.R
+import sk.styk.martin.location.service.LocationUpdatesService
 
 @RuntimePermissions
 open class LocationServiceBindableActivity : AppCompatActivity(), LocationTrackingController {
@@ -25,7 +27,7 @@ open class LocationServiceBindableActivity : AppCompatActivity(), LocationTracki
 
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val binder = service as LocationUpdatesService.LocalBinder
-            boundService =  binder.service
+            boundService = binder.service
             serviceBound = true
         }
 
@@ -33,6 +35,11 @@ open class LocationServiceBindableActivity : AppCompatActivity(), LocationTracki
             boundService = null
             serviceBound = false
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        checkLocationSettings()
     }
 
     override fun onStart() {
@@ -52,6 +59,7 @@ open class LocationServiceBindableActivity : AppCompatActivity(), LocationTracki
     @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     override fun startLocationTracking() {
         boundService?.requestLocationUpdates()
+        checkLocationSettings()
     }
 
     @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -73,5 +81,25 @@ open class LocationServiceBindableActivity : AppCompatActivity(), LocationTracki
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // NOTE: delegate the permission handling to generated function
         onRequestPermissionsResult(requestCode, grantResults)
+    }
+
+    private fun checkLocationSettings() {
+        val builder = LocationSettingsRequest.Builder()
+                .addLocationRequest(LocationRequest().apply {
+                    interval = 10000
+                    fastestInterval = 5000
+                    priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                })
+        LocationServices.getSettingsClient(this)
+                .checkLocationSettings(builder.build())
+                .addOnFailureListener { exception ->
+                    if (exception is ResolvableApiException) {
+                        try {
+                            exception.startResolutionForResult(this, 0)
+                        } catch (sendEx: IntentSender.SendIntentException) {
+                            // Ignore the error.
+                        }
+                    }
+                }
     }
 }
