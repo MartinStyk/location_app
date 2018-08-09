@@ -8,13 +8,15 @@ import android.os.*
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.google.android.gms.location.*
+import dagger.android.AndroidInjection
 import sk.styk.martin.location.R
 import sk.styk.martin.location.db.LocationData
-import sk.styk.martin.location.db.LocationDatabase
+import sk.styk.martin.location.db.LocationDataRepository
 import sk.styk.martin.location.ui.main.MainActivity
 import sk.styk.martin.location.util.Preferences
 import sk.styk.martin.location.util.extensions.basicString
 import sk.styk.martin.location.util.extensions.isRunningInForeground
+import javax.inject.Inject
 
 
 /**
@@ -23,35 +25,36 @@ import sk.styk.martin.location.util.extensions.isRunningInForeground
  */
 class LocationUpdatesService : Service() {
 
-    private val binder = LocalBinder()
+    @Inject
+    lateinit var preferences: Preferences
 
-    private var changingConfiguration = false
+    @Inject
+    lateinit var locationDataRepository: LocationDataRepository
 
-    private lateinit var notificationManager: NotificationManager
+    @Inject
+    lateinit var locationClient: FusedLocationProviderClient
+
+    @Inject
+    lateinit var notificationManager: NotificationManager
+
 
     private lateinit var locationRequest: LocationRequest
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
     private lateinit var serviceHandler: Handler
+
+    private val binder = LocalBinder()
 
     private var location: Location? = null
 
-    private val locationCallback: LocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            super.onLocationResult(locationResult)
-            onNewLocation(locationResult.lastLocation)
-        }
-    }
+    private var changingConfiguration = false
 
     override fun onCreate() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        AndroidInjection.inject(this);
 
-        locationRequest = createLocationRequest(Preferences.locationUpdateInterval(this))
+        locationRequest = createLocationRequest(preferences.locationUpdateInterval())
         getLastLocation()
 
         serviceHandler = Handler(HandlerThread(TAG).apply { start() }.looper)
-        notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         // Android O requires a Notification Channel.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -102,7 +105,7 @@ class LocationUpdatesService : Service() {
     override fun onUnbind(intent: Intent): Boolean {
         Log.i(TAG, "Last client unbound from service")
 
-        if (!changingConfiguration && Preferences.requestingLocationUpdates(this)) {
+        if (!changingConfiguration && preferences.requestingLocationUpdates()) {
             Log.i(TAG, "Starting foreground service")
             startForeground(NOTIFICATION_ID, notification)
         }
@@ -120,13 +123,13 @@ class LocationUpdatesService : Service() {
 
     fun requestLocationUpdates() {
         Log.i(TAG, "Requesting location updates")
-        Preferences.setRequestingLocationUpdates(this, true)
+        preferences.setRequestingLocationUpdates(true)
         startService(Intent(applicationContext, LocationUpdatesService::class.java))
 
         try {
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+            locationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
         } catch (unlikely: SecurityException) {
-            Preferences.setRequestingLocationUpdates(this, false)
+            preferences.setRequestingLocationUpdates(false)
             Log.e(TAG, "Lost location permission. Could not request updates. $unlikely")
         }
     }
@@ -135,11 +138,11 @@ class LocationUpdatesService : Service() {
         Log.i(TAG, "Removing location updates")
 
         try {
-            fusedLocationClient.removeLocationUpdates(locationCallback)
-            Preferences.setRequestingLocationUpdates(this, false)
+            locationClient.removeLocationUpdates(locationCallback)
+            preferences.setRequestingLocationUpdates(false)
             stopSelf()
         } catch (unlikely: SecurityException) {
-            Preferences.setRequestingLocationUpdates(this, true)
+            preferences.setRequestingLocationUpdates(true)
             Log.e(TAG, "Lost location permission. Could not remove updates. $unlikely")
         }
     }
@@ -147,20 +150,20 @@ class LocationUpdatesService : Service() {
     fun updateLocationInterval(newInterval: Long) {
         locationRequest = createLocationRequest(newInterval)
 
-        if (Preferences.requestingLocationUpdates(applicationContext)) {
+        if (preferences.requestingLocationUpdates()) {
             try {
-                fusedLocationClient.removeLocationUpdates(locationCallback).addOnCompleteListener {
-                    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+                locationClient.removeLocationUpdates(locationCallback).addOnCompleteListener {
+                    locationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
                 }
             } catch (unlikely: SecurityException) {
-                Preferences.setRequestingLocationUpdates(this, false)
+                preferences.setRequestingLocationUpdates(false)
                 Log.e(TAG, "Lost location permission. Could not request updates. $unlikely")
             }
         }
     }
 
     private fun getLastLocation() = try {
-        fusedLocationClient.lastLocation
+        locationClient.lastLocation
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful && task.result != null) {
                         location = task.result
@@ -179,7 +182,7 @@ class LocationUpdatesService : Service() {
         this.location = location
 
         Thread {
-            LocationDatabase.getInstance(this).locationDataDao().insert(LocationData(location))
+            locationDataRepository.insert(LocationData(location))
         }.start()
 
         if (isRunningInForeground()) {
@@ -195,6 +198,13 @@ class LocationUpdatesService : Service() {
 
     inner class LocalBinder : Binder() {
         val service: LocationUpdatesService = this@LocationUpdatesService
+    }
+
+    private val locationCallback: LocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            super.onLocationResult(locationResult)
+            onNewLocation(locationResult.lastLocation)
+        }
     }
 
     private val notification: Notification by lazy {

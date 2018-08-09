@@ -6,15 +6,29 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
+import dagger.android.AndroidInjection
+import dagger.android.DispatchingAndroidInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import sk.styk.martin.location.R
 import sk.styk.martin.location.ui.map.MapFragment
 import sk.styk.martin.location.ui.settings.SettingsFragment
+import javax.inject.Inject
+import dagger.android.AndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 
-class MainActivity : LocationServiceBindableActivity(), LocationTrackingController, NavigationView.OnNavigationItemSelectedListener {
+
+class MainActivity : LocationServiceBindableActivity(), LocationTrackingController, NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var anroidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
+        return anroidInjector
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)

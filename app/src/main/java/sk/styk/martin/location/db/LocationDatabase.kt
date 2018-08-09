@@ -9,20 +9,4 @@ import android.content.Context
 abstract class LocationDatabase : RoomDatabase() {
 
     abstract fun locationDataDao(): LocationDataDao
-
-    companion object {
-        private var INSTANCE: LocationDatabase? = null
-
-        fun getInstance(context: Context): LocationDatabase {
-            if (INSTANCE == null) {
-                synchronized(Database::class) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                            LocationDatabase::class.java, "location.db")
-                            .build()
-                }
-            }
-            return INSTANCE ?: throw IllegalStateException()
-        }
-
-    }
 }

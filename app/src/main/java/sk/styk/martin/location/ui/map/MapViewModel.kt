@@ -1,28 +1,31 @@
 package sk.styk.martin.location.ui.map
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import sk.styk.martin.location.db.LocationData
-import sk.styk.martin.location.db.LocationDatabase
+import sk.styk.martin.location.db.LocationDataDao
+import sk.styk.martin.location.db.LocationDataRepository
 import sk.styk.martin.location.util.Preferences
+import javax.inject.Inject
 
 
-class MapViewModel(app: Application) : AndroidViewModel(app) {
+class MapViewModel @Inject constructor(
+        private val locationRepository: LocationDataRepository,
+        private val preferences: Preferences) : ViewModel() {
 
 
-    var trackingStatus: LiveData<Boolean> = Preferences.requestingLocationUpdatesLive(app)
+    var trackingStatus: LiveData<Boolean> = preferences.requestingLocationUpdatesLive()
 
-    var lineColor: Int = Preferences.lineColor(app)
+    var lineColor: Int = preferences.lineColor()
 
-    var lineWidth: Float = Preferences.lineWidth(app)
+    var lineWidth: Float = preferences.lineWidth()
 
-    var locationUpdateInterval: Long = Preferences.locationUpdateInterval(app)
+    var locationUpdateInterval: Long = preferences.locationUpdateInterval()
 
-    var locationData = LocationDatabase.getInstance(getApplication()).locationDataDao().getAll()
+    var locationData = locationRepository.getAll()
 
     var viewTypeData = MutableLiveData<MapViewType>().apply { postValue(MapViewType.TRACKING) }
 
@@ -45,7 +48,7 @@ class MapViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun deleteLocationData() {
-        Thread { LocationDatabase.getInstance(getApplication()).locationDataDao().deleteAll() }
+        Thread { locationRepository.deleteAll() }
                 .start()
     }
 

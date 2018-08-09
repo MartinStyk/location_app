@@ -2,6 +2,7 @@ package sk.styk.martin.location.ui.map
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -22,19 +23,28 @@ import sk.styk.martin.location.ui.main.LocationServiceBindableActivity
 import sk.styk.martin.location.ui.main.LocationTrackingController
 import sk.styk.martin.location.ui.main.startLocationTrackingWithPermissionCheck
 import com.google.android.gms.maps.model.CameraPosition
+import dagger.android.support.AndroidSupportInjection
 import sk.styk.martin.location.databinding.FragmentMapsBinding
+import javax.inject.Inject
 
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
+    @Inject
+    lateinit var viewModel: MapViewModel
+
     private var googleMap: GoogleMap? = null
-    private lateinit var viewModel: MapViewModel
     private lateinit var binding: FragmentMapsBinding
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        viewModel = ViewModelProviders.of(this).get(MapViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +61,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         setupMap(savedInstanceState)
         setupLocationTrackingControl()
     }
+
+
 
 
     override fun onMapReady(googleMap: GoogleMap) {
